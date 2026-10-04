@@ -47,8 +47,16 @@ pipeline {
 
             }
         }
+        stage('Deploy to Kubernetes') {
 
-
+             steps {
+                 bat '''
+                 set KUBECONFIG=C:\\Users\\ALOK SINGH\\.kube\\config
+                 kubectl apply -f deployment.yaml
+                 kubectl apply -f service.yaml
+                 '''
+             }
+        }
     }
 
     post {
