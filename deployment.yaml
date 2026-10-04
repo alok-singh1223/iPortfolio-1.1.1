@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: iportfolio
+  labels:
+    app: iportfolio
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: iportfolio
+
+  template:
+    metadata:
+      labels:
+        app: iportfolio
+
+    spec:
+      containers:
+        - name: iportfolio
+          image: aa3000/iportfolio:latest
+          imagePullPolicy: Always
+
+          ports:
+            - containerPort: 80
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
