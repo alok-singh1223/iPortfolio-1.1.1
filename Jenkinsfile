@@ -51,9 +51,19 @@ pipeline {
 
              steps {
                  bat '''
-                 set KUBECONFIG=C:\\Users\\ALOK SINGH\\.kube\\config
+                 set "KUBECONFIG=C:\\Users\\ALOK SINGH\\.kube\\config"
+
                  kubectl apply -f deployment.yaml
+                 if errorlevel 1 exit /b 1
+                
                  kubectl apply -f service.yaml
+                 if errorlevel 1 exit /b 1
+
+                 kubectl set image deployment/iportfolio iportfolio=%IMAGE_NAME%:%IMAGE_TAG%
+                 if errorlevel 1 exit /b 1
+
+                 kubectl rollout status deployment/iportfolio --timeout=180s
+                 if errorlevel 1 exit /b 1
                  '''
              }
         }
